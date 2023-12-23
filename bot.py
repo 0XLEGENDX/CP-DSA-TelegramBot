@@ -5,7 +5,7 @@ import json
 
 
 # Replace 'YOUR_TOKEN' with the token you received from BotFather
-TOKEN = '6925215796:AAFAbPSEDu8706ufiBSml_yaocuXiLbRRNU'
+TOKEN = 'THE TOKEN'
 
 def retriveDatabase():
     
