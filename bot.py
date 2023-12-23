@@ -2,13 +2,10 @@ from telegram.ext import Updater, CommandHandler, CallbackContext, MessageHandle
 from telegram.ext import InlineQueryHandler
 import json
 
-
-
 # Replace 'YOUR_TOKEN' with the token you received from BotFather
 TOKEN = '6925215796:AAFAbPSEDu8706ufiBSml_yaocuXiLbRRNU'
 
 def retriveDatabase():
-    
     f = open('database.txt','r')
     data = f.read()
     f.close()
@@ -32,6 +29,7 @@ def databaseHandler(key,value=None,name=None,write=False):
     elif(write and not value):
         
         return
+    
     else:
         
         if(write):
@@ -72,7 +70,6 @@ def welcome_message(update, context) -> None:
     for new_member in update.message.new_chat_members:
         update.message.reply_text(f"Welcome, {new_member.mention_html()}!\nUse /help to know more.")
     
-    
 
 def message_handler(update,context):
     
@@ -83,13 +80,23 @@ def message_handler(update,context):
     if(user_info.from_user.id == 1299071374):
         messageLineArray = user_message.splitlines()
         metaData = messageLineArray[0].split()
-        databaseHandler(metaData[0],user_message,metaData[1],True)
-        update.message.reply_text("Answer Added To Database,\nHere's a look")
-        update.message.reply_text(databaseHandler(metaData[0],write=False))
-        return
+        
+        try:
+            int(metaData[0])
+            databaseHandler(metaData[0],user_message,messageLineArray[0],True)
+            update.message.reply_text("Answer Added To Database,\nHere's a look")
+            update.message.reply_text(databaseHandler(metaData[0],write=False))
+            return
+
+        except:
+            pass
+            
     
-    
-    update.message.reply_text(databaseHandler(user_message,write=False))
+    try:
+        int(user_message)
+        update.message.reply_text(databaseHandler(user_message,write=False))
+    except:
+        pass
         
 
 def answers(update, context):
